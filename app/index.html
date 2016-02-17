@@ -13,6 +13,36 @@
   <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
   <link rel="stylesheet" href="app.css">
   <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+
+
+        <script type="text/javascript" src="../assets/js/require.js"></script>
+      <script type="text/javascript" src="../assets/js/bignumber.js"></script>
+      <script type="text/javascript" src="../assets/js/web3.js"></script>
+
+
+
+      <script type="text/javascript">
+
+      console.log("hello");
+
+          var Web3 = require('web3');
+          var web3 = new Web3();
+          web3.setProvider(new web3.providers.HttpProvider());
+          function watchBalance() {
+              var coinbase = web3.eth.coinbase;
+              var originalBalance = web3.eth.getBalance(coinbase).toNumber();
+              document.getElementById('coinbase').innerText = 'coinbase: ' + coinbase;
+              document.getElementById('original').innerText = ' original balance: ' + originalBalance + '    watching...';
+              web3.eth.filter('latest').watch(function() {
+                  var currentBalance = web3.eth.getBalance(coinbase).toNumber();
+                  document.getElementById("current").innerText = 'current: ' + currentBalance;
+                  document.getElementById("diff").innerText = 'diff:    ' + (currentBalance - originalBalance);
+              });
+          }
+      </script>
+
+
+
 </head>
 <body>
   <ul class="menu">
